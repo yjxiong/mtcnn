@@ -223,10 +223,10 @@ class MtcnnDetector(object):
             rectangles = list()     # list of rectangles [x11, y11, x12, y12, confidence] (corresponding to original image)
             all_cropped_ims = list()
             while min(current_height, current_width) > net_size:
-                current_y_list = range(0, current_height - net_size + 1, self.stride) if (current_height - net_size) % self.stride == 0 \
-                else range(0, current_height - net_size + 1, self.stride) + [current_height - net_size]
-                current_x_list = range(0, current_width - net_size + 1, self.stride) if (current_width - net_size) % self.stride == 0 \
-                else range(0, current_width - net_size + 1, self.stride) + [current_width - net_size]
+                current_y_list = list(range(0, current_height - net_size + 1, self.stride)) if (current_height - net_size) % self.stride == 0 \
+                else list(range(0, current_height - net_size + 1, self.stride)) + [current_height - net_size]
+                current_x_list = list(range(0, current_width - net_size + 1, self.stride)) if (current_width - net_size) % self.stride == 0 \
+                else list(range(0, current_width - net_size + 1, self.stride)) + [current_width - net_size]
 
                 for current_y in current_y_list:
                     for current_x in current_x_list:
@@ -447,7 +447,7 @@ face candidates:%d, current batch_size:%d"%(num_boxes, batch_size)
         batch_idx = 0
         for databatch in test_data:
             if batch_idx % 100 == 0:
-                print "%d images done"%batch_idx
+                print("%d images done"%batch_idx)
             im = databatch.data[0].asnumpy().astype(np.uint8)
             t = time.time()
 
@@ -491,7 +491,7 @@ face candidates:%d, current batch_size:%d"%(num_boxes, batch_size)
 
                 t3 = time.time() - t
                 t = time.time()
-                print "time cost " + '{:.3f}'.format(t1+t2+t3) + '  pnet {:.3f}  rnet {:.3f}  onet {:.3f}'.format(t1, t2, t3)
+                print("time cost " + '{:.3f}'.format(t1+t2+t3) + '  pnet {:.3f}  rnet {:.3f}  onet {:.3f}'.format(t1, t2, t3))
 
             all_boxes.append(boxes_c)
             batch_idx += 1

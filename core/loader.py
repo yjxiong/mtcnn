@@ -1,6 +1,6 @@
 import mxnet as mx
 import numpy as np
-import minibatch
+from . import minibatch
 from config import config
 
 class TestLoader(mx.io.DataIter):
@@ -37,7 +37,7 @@ class TestLoader(mx.io.DataIter):
     def iter_next(self):
         return self.cur + self.batch_size <= self.size
 
-    def next(self):
+    def __next__(self):
         if self.iter_next():
             self.get_batch()
             self.cur += self.batch_size
@@ -110,7 +110,7 @@ class ImageLoader(mx.io.DataIter):
     def iter_next(self):
         return self.cur + self.batch_size <= self.size
 
-    def next(self):
+    def __next__(self):
         if self.iter_next():
             self.get_batch()
             self.cur += self.batch_size
